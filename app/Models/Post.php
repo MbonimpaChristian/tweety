@@ -9,14 +9,15 @@ class Post extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id','user_id','post_text','post_image'
+        'id','User_id','post_text'
     ];
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User' ,'User_id');
     }
-    public function comments()
+    public function likes()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->belongsToMany(Like::class, 'like__posts');
     }
+
 }

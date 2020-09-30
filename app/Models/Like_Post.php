@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User_Follower extends Model
+class Like_Post extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['user_id','follower_id'];
+    protected $fillable = [
+        'post_id', 'like_id'
+    ];
 }

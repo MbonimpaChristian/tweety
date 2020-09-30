@@ -23,6 +23,8 @@ Route::get('/', function () {
 //     return Inertia\Inertia::render('Dashboard');
 // })->name('dashboard');
 Route::get('/dashboard', [HomeController::class,'index']);
+Route::post('/like',[HomeController::class,'like']);
+Route::delete('/dislike',[HomeController::class,'dislike']);
 Route::resource('posts', PostController::class);
 
 

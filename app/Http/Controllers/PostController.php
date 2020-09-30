@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -39,13 +39,13 @@ class PostController extends Controller
             return back()->with('danger','please post something');
         }else{
             $newPost = Post::create([
-              'user_id'=>Auth()->user()->id,
+              'User_id'=>Auth()->user()->id,
               'post_text'=>$post
             ]);
             if($newPost){
-                return back()->with('success','post posted successful');  
+                return back()->with('success','post posted successful');
             }else{
-                return back()->with('danger','please try again'); 
+                return back()->with('danger','please try again');
             }
         }
     }
@@ -84,15 +84,15 @@ class PostController extends Controller
     {
         $postToUpdate = $request->input('post');
         if(empty($postToUpdate)){
-            return back()->with('danger','please provide a post'); 
+            return back()->with('danger','please provide a post');
         }else{
             $newPost = Post::where('id',$post->id)->update([
                 'post_text'=>$postToUpdate
             ]);
             if($newPost){
-                return redirect('/dashboard')->with('success','post updated successful');  
+                return redirect('/dashboard')->with('success','post updated successful');
             }else{
-                return back()->with('danger','please try again'); 
+                return back()->with('danger','please try again');
             }
 
         }
@@ -106,10 +106,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if($post->delete()){
-            return redirect('/dashboard')->with('success','post deleted successful');  
-        }else{
-            return back()->with('danger','please try again'); 
-        }
+        return 123;
+        // if($post->delete()){
+        //     return redirect('/dashboard')->with('success','post deleted successful');
+        // }else{
+        //     return back()->with('danger','please try again');
+        // }
     }
 }
