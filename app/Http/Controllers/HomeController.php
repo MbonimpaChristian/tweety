@@ -10,6 +10,11 @@ use App\Models\Like;
 
 class HomeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
     $users = User::get();
@@ -64,6 +69,43 @@ class HomeController extends Controller
         $userLikeAccount->posts()->detach($postToDislike);
         return back();
 
+    }
+    public function profile()
+    {
+        $users = User::get();
+        return view('Profile')->with('user',Auth()->user())
+        ->with('users',$users);
+    }
+    public function editProfile()
+    {
+        $users = User::get();
+        return view('editProfile')->with('user',Auth()->user())
+        ->with('users',$users);
+    }
+    public function updateProfile(Request $req)
+    {
+       //return $req->all();
+       $user = Auth()->user()->id;
+       $Names = $req->input('Names');
+       $username = $req->input('username');
+       $email = $req->input('email');
+
+       if(empty($Names)||empty($username)||empty($email))
+       {
+           return back()->with('danger','please fill all forms');
+       }
+       else
+       {
+        $userToUpdate = User::where('id',$user)->update([
+            'Names'=>$Names,
+            'username'=>$username,
+            'email'=>$email
+        ]);
+        if($userToUpdate)
+        {
+            return redirect('/profile')->with('success','Profile updated successful');
+        }
+       }
     }
 
 }

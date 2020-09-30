@@ -104,9 +104,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post , Request $req)
     {
-        return 123;
+        return $post->likes()->count();
         // if($post->delete()){
         //     return redirect('/dashboard')->with('success','post deleted successful');
         // }else{

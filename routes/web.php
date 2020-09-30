@@ -26,5 +26,8 @@ Route::get('/dashboard', [HomeController::class,'index']);
 Route::post('/like',[HomeController::class,'like']);
 Route::delete('/dislike',[HomeController::class,'dislike']);
 Route::resource('posts', PostController::class);
+Route::get('/profile',[HomeController::class,'profile']);
+Route::get('/editProfile',[HomeController::class,'editProfile']);
+Route::post('/updateProfile',[HomeController::class,'updateProfile']);
 
 

@@ -27,7 +27,7 @@
         margin-top: 5%;
         border: 1px solid #000;
     }
-    .fa-thumbs-up{
+    .fa-thumbs-up {
         font-size:24px;
     }
     .fabutton {
@@ -35,9 +35,9 @@
      padding: 0px;
      border: none;
 }
-.fa-dislike{
-    color:#1ab2ff;
-}
+.fa-thumbs-down{
+        font-size:24px;
+    }
 </style>
 @extends('layouts.layouts')
 
@@ -70,7 +70,7 @@
         <div class="col-md-12">
             @if(count($posts) > 0)
               @foreach($posts as $post)
-                <div class="row post_list">
+                <div class="row post_list" style="border-radius:10%; border:1px solid #1ab2ff">
                     <div class="col-md-2">
                         picture
                     </div>
@@ -83,7 +83,9 @@
                               @if($userLikeCount > 0)
                               @if($userLikes->posts->contains($post->id))
                               <?php $form_class = $post->id ?>
-                                 <button onclick = "document.getElementById('{{ $form_class }}').submit();">dislike</button>
+                                 <button class="fabutton" onclick = "document.getElementById('{{ $form_class }}').submit();">
+                                    <i class="far fa-thumbs-down"></i>
+                                </button>
                                  <form id="{{ $form_class }}" action="/dislike" method="POST" style="display: none">
                                   <input type="hidden" name="_method" value="delete">
                                   <input type="hidden" name="postToDislike" value="{{ $post->id}}" >
@@ -113,6 +115,7 @@
                               @endif
                             </div>
                             <div class="col-md-6 offset-md-4">
+                                <a href="" class="text-success">Comment</a>
                                 @if($post->User_id == Auth()->user()->id)
                                 <a href="{{route('posts.edit',$post->id)}}" class="text-primary">Edit</a>
                                 <?php $form_class = $post->id ?>
@@ -139,13 +142,13 @@
 
 
 <div class="col-md-3 offset-md-1">
- <h3 class="text-center"><b>All Users</b></h3>
+ <h3><b>Following</b></h3>
  <br>
      @foreach($users as $user)
      @if(Auth()->user()->id!= $user->id)
       <div class="row">
           <div class="col-md-4">
-          <a href=""><p class="lead">@<b>{{$user->username}}</b></p></a>
+          <a href=""><p class="lead"><b>{{$user->username}}</b></p></a>
           </div>
       </div>
      @endif

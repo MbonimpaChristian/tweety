@@ -19,5 +19,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Like::class, 'like__posts');
     }
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 
 }

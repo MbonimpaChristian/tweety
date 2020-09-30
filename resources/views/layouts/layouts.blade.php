@@ -37,23 +37,10 @@
         color: 	 #0088cc;
         border-radius: 20px;
         padding:4%;
+        cursor: pointer;
     }
-    /* .btn-round-lg{
-        border-radius: 22.5px;
-        border-color: transparent;
-        padding: 4% 30%;
-        background-color: #1ab2ff;
-        color: #fff;
-    }
-    .btn-round-lg{
-        border-radius: 30.5px;
-        border-color:transparent;
-        padding: 4% 30%;
-        background-color: #1ab2ff;
-        color: #fff;
-    } */
     .form-rounded {
-        position: relative;
+     position: relative;
      border-radius: 1rem;
      border-color: none;
      background: #e0ebeb;
@@ -68,17 +55,10 @@
                 <br>
                  <div class="row Icons">
                      <div class="col-md-12">
-                        <span class="Home"><i class="fas fa-home"></i><b>Home</b></span><br><br>
+                        <span class="Home"><i class="fas fa-home"></i><b><a href="/dashboard">Home</a></b></span><br><br>
                         <span class="Home"><i class="fas fa-hashtag"></i><b>Explore</b></span><br><br>
-                        {{-- <span class="Home"><i class="far fa-bell"></i><b>Notifications</b></span><br><br>
-                        <span class="Home"><i class="far fa-envelope"></i><b>Messages</b></span><br><br>
-                        <span class="Home"><i class="far fa-bookmark"></i><b>BookMarks</b></span><br><br>
-                        <span class="Home"><i class="fas fa-list"></i><b>List</b></span><br><br> --}}
-                        <span class="Home"><i class="far fa-user"></i><b>Profile</b></span><br><br>
-                        {{-- <div>
-                            <button class="btn-tweet btn-round-lg btn-lg">Tweet</button><br><br>
-                         </div> --}}
-                     
+                        <span class="Home"><i class="far fa-user"></i><b><a href="/profile">Profile</a></b></span><br><br>
+
                         <div>
                         <span class="Home"><i class="fas fa-sign-out-alt"></i><a href="{{route('logout')}}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"><b>Logout</b></a>
