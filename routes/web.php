@@ -29,5 +29,7 @@ Route::resource('posts', PostController::class);
 Route::get('/profile',[HomeController::class,'profile']);
 Route::get('/editProfile',[HomeController::class,'editProfile']);
 Route::post('/updateProfile',[HomeController::class,'updateProfile']);
+Route::get('/comment',[HomeController::class,'getComment']);
+Route::post('/comment',[HomeController::class,'postComment']);
 
 

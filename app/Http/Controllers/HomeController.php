@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Like;
+use App\Models\Comment;
 
 
 class HomeController extends Controller
@@ -14,7 +15,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
     $users = User::get();
@@ -106,6 +107,37 @@ class HomeController extends Controller
             return redirect('/profile')->with('success','Profile updated successful');
         }
        }
+    }
+    public function getComment(Request $req)
+    {
+        $post = $req->input('PostToBeCommented');
+        $PostToBeCommented = Post::with('user')->with('comments')->where('id',$post)->first();
+        return view('comments')->with('PostToBeCommented',$PostToBeCommented);
+        //return $PostToBeCommented;
+    }
+    public function postComment(Request $req)
+    {
+        $comment = $req->comment;
+        $post = $req->PostToBeCommented;
+        if(empty($comment))
+        {
+            return back()->with('danger','please a comment can t be empty');
+        }
+        else
+        {
+            $newComment = Comment::create([
+               'user_id'=>Auth()->user()->id,
+               'post_id'=>$post,
+               'comment'=>$comment
+            ]);
+            if($newComment)
+            {
+                return back()->with('success','commented successful');
+            }
+            else{
+                return back()->with('danger','please try again');
+            }
+        }
     }
 
 }

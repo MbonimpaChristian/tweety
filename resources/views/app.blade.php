@@ -42,7 +42,7 @@
 @extends('layouts.layouts')
 
 @section('content')
-<div class="col-md-5 ">
+<div class="col-md-5">
     <div class="row">
         <div class="col-md-9 offset-md-2 post">
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -115,7 +115,11 @@
                               @endif
                             </div>
                             <div class="col-md-6 offset-md-4">
-                                <a href="" class="text-success">Comment</a>
+                                Comments:{{ $post->comments->count() }}
+                                <form action="/comment" method="get">
+                                    <input type="hidden" name="PostToBeCommented" value={{ $post->id }}>
+                                    <button type='submit' class="btn btn-success">comment</button>
+                                </form>
                                 @if($post->User_id == Auth()->user()->id)
                                 <a href="{{route('posts.edit',$post->id)}}" class="text-primary">Edit</a>
                                 <?php $form_class = $post->id ?>

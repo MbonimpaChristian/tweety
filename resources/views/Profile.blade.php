@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="col-md-2 offset-md-1">
-    <h3><b>All Users</b></h3>
+    <h3><b>Following</b></h3>
     <br>
         @foreach($users as $user)
         @if(Auth()->user()->id!= $user->id)
