@@ -19,6 +19,9 @@
     .btn-primary{
         background-color: #1ab2ff;
     }
+    .btn-primary{
+        background-color: #1ab2ff;
+    }
     .jumbotron{
         background-color: #ffffe6;
     }
@@ -146,18 +149,47 @@
 
 
 <div class="col-md-3 offset-md-1">
- <h3><b>Following</b></h3>
+ <h3><b>Friends</b></h3>
  <br>
-     @foreach($users as $user)
+     @foreach($users as $user) 
+     {{-- @foreach ($followers->$following as $Follower)  --}}
      @if(Auth()->user()->id!= $user->id)
       <div class="row">
-          <div class="col-md-4">
-          <a href=""><p class="lead"><b>{{$user->username}}</b></p></a>
+          <div class="col-md-8">
+          <a><p class="lead"><b>{{$user->username}} </b></p></a>
           </div>
+          @if(Auth()->user()->following()->find($user))
+          <div class="form-group">
+            <a href="{{route('unfollow', ['id'=>$user->id])}}" class="btn btn-post btn-primary float-right">Unfollow</a>
+          </div>
+          @else
+          <div class="form-group">
+            <a href="{{route('follow', ['id'=>$user->id])}}" class="btn btn-post btn-primary float-right">follow</a>
+          </div>
+          @endif
       </div>
      @endif
+     {{-- @endforeach --}}
      @endforeach
 </div>
+{{-- @foreach(auth()->user()->follows as $user)
+     @if(Auth()->user()->id!= $user->id)
+      <div class="row">
+          <div class="col-md-8">
+          <a href=""><p class="lead"><b>{{$user->username}} </b></p></a>
+          </div>
+          {{-- <div class="form-group"> --}}
+              {{-- <form method="POST" action="/Profile/{{$user->Names}}/follower">
+                @csrf
+            <h3 class="btn btn-post btn-primary float-right">Follow</h3>
+          {{-- </div> --}}
+        {{-- </form>
+      </div>
+     @endif
+     @endforeach --}}
+{{-- </div> --}}
+
+
 @endsection
 
 <!-- Button trigger modal -->

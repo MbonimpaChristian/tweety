@@ -16,7 +16,7 @@
             @endif
             @endforeach
             <h3>{{$user->Names}}</h3>
-             @<b>{{$user->username}}</b>
+             <b>{{$user->username}}</b>
         </div>
         <div class="col-md-4">
            <a href="/editProfile" class="btn btn-primary btn-block">Edit Profile</a>
@@ -24,14 +24,17 @@
     </div>
 </div>
 <div class="col-md-2 offset-md-1">
-    <h3><b>Following</b></h3>
+    <h3><b>Friends</b></h3>
     <br>
         @foreach($users as $user)
         @if(Auth()->user()->id!= $user->id)
          <div class="row">
-             <div class="col-md-4">
+             <div class="col-md-7">
              <a href=""><p class="lead"><b>{{$user->username}}</b></p></a>
              </div>
+             <div class="form-group">
+                <h3 class="btn btn-post btn-primary float-right">Follow</h3>
+              </div>
          </div>
         @endif
         @endforeach

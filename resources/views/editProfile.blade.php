@@ -11,6 +11,7 @@
     </div>
     <br>
     <div class="row">
+        @include('layouts.messages')
         <div class="col-md-12">
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
             @if(Session::has($msg))
@@ -28,7 +29,7 @@
                 @csrf
                 <div class="form-group">
                   <label>Names</label>
-                <input type="text" name="Names" value="{{$user->Names}}" class="form-control">
+                <input type="text"  name="names" value="{{$user->Names}}" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>username</label>
@@ -45,16 +46,38 @@
     </div>
 </div>
 <div class="col-md-2 offset-md-1">
-    <h3><b>Following</b></h3>
+    <h3><b>Friends</b></h3>
     <br>
-        @foreach($users as $user)
+
+    @foreach($users as $user) 
+     {{-- @foreach ($followers->$following as $Follower)  --}}
+     @if(Auth()->user()->id!= $user->id)
+      <div class="row">
+          <div class="col-md-8">
+          <a><p class="lead"><b>{{$user->username}} </b></p></a>
+          </div>
+          @if(Auth()->user()->following()->find($user))
+          <div class="form-group">
+            <a href="{{route('unfollow', ['id'=>$user->id])}}" class="btn btn-post btn-primary float-right">Unfollow</a>
+          </div>
+          @else
+          <div class="form-group">
+            <a href="{{route('follow', ['id'=>$user->id])}}" class="btn btn-post btn-primary float-right">follow</a>
+          </div>
+          @endif
+      </div>
+     @endif
+        {{-- @foreach($users as $user)
         @if(Auth()->user()->id!= $user->id)
          <div class="row">
-             <div class="col-md-4">
+             <div class="col-md-7">
              <a href=""><p class="lead"><b>{{$user->username}}</b></p></a>
              </div>
+             <div class="form-group">
+                <h3 class="btn btn-post btn-primary float-right">Follow</h3>
+              </div>
          </div>
-        @endif
+        @endif --}}
         @endforeach
    </div>
 @endsection

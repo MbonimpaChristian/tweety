@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Like;
 use App\Models\Comment;
-
+use App\Rules\NotInteger;
 
 class HomeController extends Controller
 {
@@ -84,30 +84,69 @@ class HomeController extends Controller
         ->with('users',$users);
     }
     public function updateProfile(Request $req)
-    {
-       //return $req->all();
-       $user = Auth()->user()->id;
-       $Names = $req->input('Names');
-       $username = $req->input('username');
-       $email = $req->input('email');
+    {   
+        // $this->validate($req,[
+        //     'names'=>'required|string',
+        //     'username'=>'required|string',
+        //     'email'=>'required|string'
+        // ]);  
+        
+     //return gettype($req->input('names'));
+     
 
-       if(empty($Names)||empty($username)||empty($email))
-       {
-           return back()->with('danger','please fill all forms');
-       }
-       else
-       {
-        $userToUpdate = User::where('id',$user)->update([
-            'Names'=>$Names,
-            'username'=>$username,
-            'email'=>$email
-        ]);
+       $user = Auth()->user()->id;
+        $Names = $req->input('names');
+        $username = $req->input('username');
+        $email = $req->input('email');
+// code for use when those one are failed
+$validatedData = $req->validate([
+    'names'=>['required','string',new NotInteger],
+    'username'=>['required','string'],
+    'email'=>['required','string']
+]);
+        // dd($Names);
+        // return gettype($Names);
+        // return $username;
+    //    if(gettype($Names)=="number"){
+    //     return back()->with('danger','please your name must be a string');
+    //    }
+    //    else{
+           
+    //    }
+    //   
+    // this used for message validation
+    //    else{
+    //        return $Names;
+    //    }
+    //  $username = $req->input('username');
+    //     $email = $req->input('email');
+
+    // $user = Auth()->user(); 
+
+        // if(empty($Names)||empty($username)||empty($email))
+        // {
+        //     return back()->with('danger','please fill all forms');
+        // }
+        // else
+        // {
+         $userToUpdate = User::where('id',$user)->update([
+             'Names'=>$validatedData["names"],
+             'username'=>$validatedData["username"],
+             'email'=>$validatedData["email"]
+         ]);
+
+        // those when a validation has been failed
+        //  if($userToUpdate)
+        //  {
+        //      return redirect('/profile')->with('success','Profile updated successful');
+        //  }
         if($userToUpdate)
-        {
-            return redirect('/profile')->with('success','Profile updated successful');
+         {
+             return redirect('/profile')->with('success','Profile updated successful');
+         }
         }
-       }
-    }
+    
+    
     public function getComment(Request $req)
     {
         $post = $req->input('PostToBeCommented');
@@ -138,6 +177,22 @@ class HomeController extends Controller
                 return back()->with('danger','please try again');
             }
         }
+    }
+
+    public function follow(Request $req){
+        $id=$req->id;
+        $follower=Auth()->user();
+        $following=User::find($id);
+        $follower->following()->attach($following);
+        return back()->with('success','following successful');
+    }
+
+    public function unfollow(Request $req){
+        $id=$req->id;
+        $follower=Auth()->user();
+        $following=User::find($id);
+        $follower->following()->detach($following);
+        return back()->with('success','unfollowing successful');
     }
 
 }

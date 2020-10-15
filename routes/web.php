@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Models\User;
+use App\Models\Follower;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +18,11 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/test', function () {
+    $user1 = User::find(1);
+    $user2 = User::find(2);
+    $user1->following()->attach($user2);
+    dd($user2->following()->find($user1));
 });
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -31,5 +37,10 @@ Route::get('/editProfile',[HomeController::class,'editProfile']);
 Route::post('/updateProfile',[HomeController::class,'updateProfile']);
 Route::get('/comment',[HomeController::class,'getComment']);
 Route::post('/comment',[HomeController::class,'postComment']);
+Route::get('/following',[HomeController::class,'follow'])->name('follow');
+Route::get('/unfollowing',[HomeController::class,'unfollow'])->name('unfollow');
+Route::get('/',function(){
+    return view('welcome');
+});
 
 
